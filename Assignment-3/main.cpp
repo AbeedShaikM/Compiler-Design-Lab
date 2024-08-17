@@ -55,11 +55,8 @@ int main(){
     cout << "\nGrammar after removing left recursion.\n";
     o_grammar.f_print();
     cout << "\n";
-    int id = 1;
-    int l_result = o_grammar.f_getParseTree(s, 'G', true, id, 1);
-    cout << "\n";
-    if(l_result == -1) cout << s << " is not accepted by the given grammar.\n";
-    else cout << s << " is accepted by the given grammar.\n";
+    if(not o_grammar.f_getParseTree(s, c)) cout << "\n" << s << " is not accepted by the given grammar.\n";
+    else cout << "\n" << s << " is accepted by the given grammar.\n";
     break;
   }
   default:

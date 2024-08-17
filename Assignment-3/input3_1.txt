@@ -1,21 +1,17 @@
-5 4
-+ - * / i
-G
-E
-!
+6 3
+( ) + - n i
 E
 E+T
-E-T
 T
+!
+F
+(E)
+i
 !
 T
 T*F
-T/F
 F
 !
-F
-i
-!
-i-i*i
-G
 3
+n**+n
+E

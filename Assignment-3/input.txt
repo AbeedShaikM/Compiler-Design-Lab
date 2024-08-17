@@ -1,0 +1,17 @@
+7 3
+a b c d e f g
+S
+A
+!
+A
+APb
+abc
+abcAdefg
+epsilon
+!
+P
+def
+!
+3
+abcdefb
+S

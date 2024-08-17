@@ -150,48 +150,39 @@ vector<string> c_grammar::f_getStringsWithSamePrefix(int root, vector<map<char, 
   return l_result;
 }
 
-int c_grammar::f_getParseTree(string& p_grammarString, char p_startSymbol, bool p_isRoot, int& p_transitionID, int p_parentTransactionID,int p_pos){
-  // cout << p_startSymbol << endl;
-  int l_startPos = p_pos;
-  for(string l_varString: m_productionRules[p_startSymbol]){
-    int l_parentTransactionID = p_transitionID;
-    cout << p_transitionID << '(' << p_parentTransactionID << "). Taking " << p_startSymbol << "\t----->\t" << l_varString << "\n";
-    if(l_varString == "epsilon"){
-      return p_pos;
-    }
-    bool flag = true;
-    for(char l_symbol: l_varString){
-      if(m_nonTerminals.find(l_symbol) != m_nonTerminals.end()){
-        int l_nextPos = f_getParseTree(p_grammarString, l_symbol, false, ++p_transitionID, l_parentTransactionID, p_pos);
-        if(l_nextPos == -1) {
-          flag = false;
-          break;
-        }
-        p_pos = l_nextPos;
+bool c_grammar::f_getParseTree(string& p_grammarString, char p_startSymbol){
+  stack<char> l_sententialForm;
+  l_sententialForm.push(p_startSymbol);
+  return f_isAccepted(p_grammarString, l_sententialForm, 0);
+}
+
+
+
+bool c_grammar::f_isAccepted(string p_grammarString, stack<char> p_sententialForm, int p_pos){
+  if(p_sententialForm.empty() and p_pos == (int)p_grammarString.size()) return true;
+  if(p_sententialForm.empty()) return false;
+  if((int)p_grammarString.size() == p_pos) return false;
+  char curr = p_sententialForm.top();
+  p_sententialForm.pop();
+  if(m_nonTerminals.find(curr) != m_nonTerminals.end()){
+    bool flag = false;
+    for(string l_varString: m_productionRules[curr]){
+      cout << "Taking " << curr << "\t---->\t" << l_varString << "\n";
+      stack<char> temp_st = p_sententialForm;
+      if(l_varString != "epsilon") {
+        for(int i = l_varString.size() - 1; i >= 0; i--) temp_st.push(l_varString[i]);
       }
-      else{
-        if(p_pos == (int)p_grammarString.size() or p_grammarString[p_pos] != l_symbol){
-          flag = false;
-          break;
-        }
-        if(p_grammarString[p_pos] == l_symbol){
-          p_pos++;
-        }
+      if(f_isAccepted(p_grammarString, temp_st, p_pos)) {
+        flag = true;
+        break;
       }
     }
-    if(not flag){
-      cout << p_transitionID << '(' << p_parentTransactionID << ") - Mismatch: Backtracking..\n";
-      p_transitionID++;
-      p_pos = l_startPos;
-      continue;
-    }
-    if(p_isRoot and p_pos != (int)p_grammarString.size()){
-      cout << p_transitionID << '(' << p_parentTransactionID << ") - Mismatch: Backtracking...\n";
-      p_transitionID++;
-      p_pos = l_startPos;
-      continue;
-    }
-    return p_pos;
+    return flag;
   }
-  return -1;
+  else{
+    if(p_grammarString[p_pos] == curr){
+      return f_isAccepted(p_grammarString, p_sententialForm, p_pos + 1);
+    }
+    else return false;
+  }
 }
