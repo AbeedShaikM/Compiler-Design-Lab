@@ -161,7 +161,6 @@ bool c_grammar::f_getParseTree(string& p_grammarString, char p_startSymbol){
 bool c_grammar::f_isAccepted(string p_grammarString, stack<char> p_sententialForm, int p_pos){
   if(p_sententialForm.empty() and p_pos == (int)p_grammarString.size()) return true;
   if(p_sententialForm.empty()) return false;
-  if((int)p_grammarString.size() == p_pos) return false;
   char curr = p_sententialForm.top();
   p_sententialForm.pop();
   if(m_nonTerminals.find(curr) != m_nonTerminals.end()){
@@ -176,10 +175,12 @@ bool c_grammar::f_isAccepted(string p_grammarString, stack<char> p_sententialFor
         flag = true;
         break;
       }
+      cout << "Backtracking: " << curr << "\t---->\t" << l_varString << "\n";
     }
     return flag;
   }
   else{
+    if((int)p_grammarString.size() == p_pos) return false;
     if(p_grammarString[p_pos] == curr){
       return f_isAccepted(p_grammarString, p_sententialForm, p_pos + 1);
     }
