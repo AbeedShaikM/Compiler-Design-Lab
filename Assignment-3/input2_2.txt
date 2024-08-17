@@ -1,0 +1,17 @@
+4 3
+a b * +
+E
+aaabF
+abT
+aabF
+!
+T
+baaF
+baF
+baabT
+!
+F
+aaab
+aab
+!
+2
