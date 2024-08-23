@@ -1,0 +1,14 @@
+3 3
+n + *
+S
+nB
+!
+B
+nBAB
+epsilon
+!
+A
++
+*
+!
+1

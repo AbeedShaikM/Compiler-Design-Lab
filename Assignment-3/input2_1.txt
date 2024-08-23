@@ -1,8 +1,9 @@
-3 1
-a c B
-A
-aAB
-aBc
-aAc
+4 1
+a b c d
+S
+a
+ab
+abc
+abcd
 !
 2

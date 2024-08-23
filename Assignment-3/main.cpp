@@ -32,7 +32,6 @@ int main(){
 
   int q_no;
   cin >> q_no;
-
   o_grammar.f_print();
 
   switch (q_no){

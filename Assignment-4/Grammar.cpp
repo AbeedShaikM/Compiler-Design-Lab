@@ -160,7 +160,6 @@ bool c_grammar::f_isAccepted(string p_grammarString, stack<char> p_sententialFor
   if(p_sententialForm.empty() and p_pos == (int)p_grammarString.size()) return true;
   if(p_sententialForm.empty()) return false;
   char curr = p_sententialForm.top();
-  if(p_grammarString == "epsilon" and m_productionRules[curr].find("epsilon") != m_productionRules[curr].end()) return true;
   p_sententialForm.pop();
   if(m_nonTerminals.find(curr) != m_nonTerminals.end()){
     bool flag = false;
@@ -185,4 +184,91 @@ bool c_grammar::f_isAccepted(string p_grammarString, stack<char> p_sententialFor
     }
     else return false;
   }
+}
+
+map<char, set<char>> c_grammar::f_getFirst(){
+  map<char, set<char>> l_result;
+  while(true){
+    bool l_change = false;
+    for(char l_nonTerminal: m_nonTerminals){
+      for(string l_varString: m_productionRules[l_nonTerminal]){
+        if(l_varString == "epsilon"){
+          l_result[l_nonTerminal].insert('#');
+          continue;
+        }
+        for(char l_symbol: l_varString){
+          if(m_terminals.find(l_symbol) != m_terminals.end()){
+            if(l_result[l_nonTerminal].find(l_symbol) == l_result[l_nonTerminal].end()){
+              l_change = true;
+              l_result[l_nonTerminal].insert(l_symbol);
+            }
+            break;
+          }
+          bool l_hasEpsilon = false;
+          for(char l_first: l_result[l_symbol]){
+            if(l_result[l_nonTerminal].find(l_first) == l_result[l_nonTerminal].end()){
+              l_result[l_nonTerminal].insert(l_first);
+              l_change = true;
+            }
+            if(l_first == '#') l_hasEpsilon = true;
+          }
+          if(not l_hasEpsilon) break;
+        }
+      }
+    }
+    if(l_change) continue;
+    break;
+  }
+
+  return l_result;
+}
+
+map<char, set<char>>c_grammar::f_getFollow(char p_startSymbol){
+  map<char, set<char>> l_result;
+  map<char, set<char>> l_first = f_getFirst();
+  l_result[p_startSymbol].insert('$');
+  while(true){
+    bool l_change = false;
+    for(char l_nonTerminal: m_nonTerminals){
+      for(string l_varString: m_productionRules[l_nonTerminal]){
+        if(l_varString == "epsilon") continue;
+        for(int i = 0; i < (int)l_varString.size(); i++){
+          if(m_terminals.find(l_varString[i]) != m_terminals.end()){
+            continue;
+          }
+          for(int j = i + 1; j <= (int)l_varString.size(); j++){
+            if(j == (int)l_varString.size()){
+              for(char l_symbol: l_result[l_nonTerminal]){
+                if(l_result[l_varString[i]].find(l_symbol) == l_result[l_varString[i]].end()){
+                  l_change = true;
+                  l_result[l_varString[i]].insert(l_symbol);
+                }
+              }
+              continue;
+            }
+            if(m_terminals.find(l_varString[j]) != m_terminals.end()){
+              if(l_result[l_varString[i]].find(l_varString[j]) == l_result[l_varString[i]].end()){
+                l_change = true;
+                l_result[l_varString[i]].insert(l_varString[j]);
+              }
+              break;
+            }
+            bool l_hasEpsilon = false;
+            for(char l_symbol: l_first[l_varString[j]]){
+              if(l_result[l_varString[i]].find(l_symbol) == l_result[l_varString[i]].end()){
+                l_change = true;
+                l_result[l_varString[i]].insert(l_symbol);
+              }
+              if(l_symbol == '#') l_hasEpsilon = true;
+            }
+            if(not l_hasEpsilon) break;
+          }
+        }
+      }
+    }
+    if(l_change) continue;
+    break;
+  }
+
+  return l_result;
 }
