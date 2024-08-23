@@ -7,7 +7,6 @@ T
 F
 (E)
 i
-n
 !
 T
 T*F
