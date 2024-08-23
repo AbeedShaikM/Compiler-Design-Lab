@@ -255,11 +255,14 @@ map<char, set<char>>c_grammar::f_getFollow(char p_startSymbol){
             }
             bool l_hasEpsilon = false;
             for(char l_symbol: l_first[l_varString[j]]){
+              if(l_symbol == '#') {
+                l_hasEpsilon = true;
+                continue;
+              }
               if(l_result[l_varString[i]].find(l_symbol) == l_result[l_varString[i]].end()){
                 l_change = true;
                 l_result[l_varString[i]].insert(l_symbol);
               }
-              if(l_symbol == '#') l_hasEpsilon = true;
             }
             if(not l_hasEpsilon) break;
           }
