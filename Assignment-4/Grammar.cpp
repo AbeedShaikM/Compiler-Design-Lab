@@ -193,12 +193,18 @@ map<char, set<char>> c_grammar::f_getFirst(){
     for(char l_nonTerminal: m_nonTerminals){
       for(string l_varString: m_productionRules[l_nonTerminal]){
         if(l_varString == "epsilon"){
-          l_result[l_nonTerminal].insert('#');
+          if(l_result[l_nonTerminal].find('#') == l_result[l_nonTerminal].end()){
+            l_result[l_nonTerminal].insert('#');
+            l_change = true;
+          }
           continue;
         }
         for(int i = 0; i <= (int)l_varString.size(); i++){
           if(i == (int)l_varString.size()){
-            l_result[l_nonTerminal].insert('#');
+            if(l_result[l_nonTerminal].find('#') == l_result[l_nonTerminal].end()){
+              l_result[l_nonTerminal].insert('#');
+              l_change = true;
+            }
             continue;
           }
           char l_symbol = l_varString[i];
@@ -264,6 +270,7 @@ map<char, set<char>>c_grammar::f_getFollow(char p_startSymbol){
             bool l_hasEpsilon = false;
             for(char l_symbol: l_first[l_varString[j]]){
               if(l_symbol == '#') {
+                l_hasEpsilon = true;
                 continue;
               }
               if(l_result[l_varString[i]].find(l_symbol) == l_result[l_varString[i]].end()){
