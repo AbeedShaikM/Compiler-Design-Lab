@@ -1,15 +1,20 @@
-5 3
-( ) + * i
-E
-E+T
+2 4
+a b
+A
+TB
+!
+S
+AS
+a
+!
+B
+epsilon
+S
+!
 T
+epsilon
+a
+b
 !
-F
-(E)
-i
-!
-T
-T*F
-F
-!
-1
+2
+S

@@ -1,9 +1,18 @@
-4 1
-r f + *
-E
-E+T
-E*T
-r
-f
+2 4
+a b
+A
+TB
+!
+S
+AS
+!
+B
+epsilon
+S
+!
+T
+epsilon
+a
+b
 !
 1
