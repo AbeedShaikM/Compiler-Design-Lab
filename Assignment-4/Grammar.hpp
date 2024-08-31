@@ -24,12 +24,13 @@ class c_grammar{
     static vector<string> f_getStringsWithSamePrefix(int p_root, vector<map<char, int>>& p_trie, vector<string>& l_ends);
     map<char, set<char>> f_getFirst();
     map<char, set<char>> f_getFollow(char p_startSymbol);
-  private:
-    void f_removeImmediateLeftRecursion(char p_nonTerminal);
-    bool f_isAccepted(string p_grammarString, stack<char> p_currentSentForm, int pos);
+  protected:
     set<char> m_terminals;
     set<char> m_nonTerminals;
     map<char, set<string>> m_productionRules;
+  private:
+    void f_removeImmediateLeftRecursion(char p_nonTerminal);
+    bool f_isAccepted(string p_grammarString, stack<char> p_currentSentForm, int pos);
 };
 
 #endif //GRAMMAR_HPP
