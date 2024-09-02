@@ -10,14 +10,14 @@ int main(){
 
   // cout << "Enter terminals: ";
   for(int i = 0; i < l_terminalCount; i++){
-    char l_terminal;
+    string l_terminal;
     cin >> l_terminal;
     o_grammar.f_addTerminal(l_terminal);
   }
 
   // cout << "Enter non-terminals (upper case letters): ";
   for(int i = 0; i < l_nonTerminalCount; i++){
-    char l_nonTerminal;
+    string l_nonTerminal;
     cin >> l_nonTerminal;
     o_grammar.f_addNonTerminal(l_nonTerminal);
 
@@ -48,7 +48,7 @@ int main(){
   case 3:{
     string s;
     cin >> s;
-    char c;
+    string c;
     cin >> c;
     o_grammar.f_removeLeftRecursion();
     cout << "\nGrammar after removing left recursion.\n";

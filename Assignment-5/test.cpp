@@ -10,14 +10,14 @@ int main(){
 
   // cout << "Enter terminals: ";
   for(int i = 0; i < l_terminalCount; i++){
-    char l_terminal;
+    string l_terminal;
     cin >> l_terminal;
     o_predictiveParser.f_addTerminal(l_terminal);
   }
-
+  
   // cout << "Enter non-terminals (upper case letters): ";
   for(int i = 0; i < l_nonTerminalCount; i++){
-    char l_nonTerminal;
+    string l_nonTerminal;
     cin >> l_nonTerminal;
     o_predictiveParser.f_addNonTerminal(l_nonTerminal);
 
@@ -33,12 +33,14 @@ int main(){
   o_predictiveParser.f_print();
   o_predictiveParser.f_removeLeftRecursion();
   o_predictiveParser.f_leftFactor();
+  cout << "\n";
   o_predictiveParser.f_print();
-  char l_startSymbol;
+  string l_startSymbol;
   cin >> l_startSymbol;
-  o_predictiveParser.f_printParseTable(l_startSymbol);
+  o_predictiveParser.f_printParseTable(l_startSymbol, "parseTable.txt");
   string l_inputString;
-  cin >> l_inputString;
+  ifstream inputFile("tokens.txt");
+  inputFile >> l_inputString;
   if(o_predictiveParser.f_isAccepted(l_inputString, l_startSymbol)){
     cout << "Input string is accepted by the grammar\n";
   }

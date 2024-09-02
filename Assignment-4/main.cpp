@@ -10,14 +10,14 @@ int main(){
 
   // cout << "Enter terminals: ";
   for(int i = 0; i < l_terminalCount; i++){
-    char l_terminal;
+    string l_terminal;
     cin >> l_terminal;
     o_grammar.f_addTerminal(l_terminal);
   }
 
   // cout << "Enter non-terminals (upper case letters): ";
   for(int i = 0; i < l_nonTerminalCount; i++){
-    char l_nonTerminal;
+    string l_nonTerminal;
     cin >> l_nonTerminal;
     o_grammar.f_addNonTerminal(l_nonTerminal);
 
@@ -36,14 +36,12 @@ int main(){
 
   switch (q){
     case 1:{
-      map<char, set<char>> l_result = o_grammar.f_getFirst();
+      o_grammar.f_removeLeftRecursion();
+      o_grammar.f_leftFactor();
+      map<string, set<string>> l_result = o_grammar.f_getFirst();
       for(auto [l_nonTerminal, l_first]: l_result){
         cout << "First (" << l_nonTerminal << ")\t => {";
-        for(char l_terminal: l_first){
-          if(l_terminal == '#'){
-            cout << " epsilon,";
-            continue;
-          }
+        for(string l_terminal: l_first){
           cout << " " << l_terminal << ",";
         }
         cout << "}\n";
@@ -51,16 +49,14 @@ int main(){
       break;
     }
     case 2:{
-      char l_startSymbol;
+      o_grammar.f_removeLeftRecursion();
+      o_grammar.f_leftFactor();
+      string l_startSymbol;
       cin >> l_startSymbol;
-      map<char, set<char>> l_result = o_grammar.f_getFollow(l_startSymbol);
+      map<string, set<string>> l_result = o_grammar.f_getFollow(l_startSymbol);
       for(auto [l_nonTerminal, l_first]: l_result){
         cout << "Follow (" << l_nonTerminal << ")\t => {";
-        for(char l_terminal: l_first){
-          if(l_terminal == '#'){
-            cout << " epsilon,";
-            continue;
-          }
+        for(string l_terminal: l_first){
           cout << " " << l_terminal << ",";
         }
         cout << "}\n";

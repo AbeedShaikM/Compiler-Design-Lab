@@ -4,12 +4,12 @@
 
 class c_predictiveParser: public c_grammar{
   public:
-    bool f_isAccepted(string p_inputString, char p_startSymbol);
+    bool f_isAccepted(string p_inputString, string p_startSymbol);
     c_predictiveParser();
-    void f_printParseTable(char p_startSymbol);
+    void f_printParseTable(string p_startSymbol, string p_outputFileName);
   private:
-    map<char, map<char, string>> m_table;
-    void f_populateTable(char p_startSymbol);
+    map<string, map<string, string>> m_table;
+    void f_populateTable(string p_startSymbol);
 };
 
 #endif // PREDICTIVE_PARSERHPP
