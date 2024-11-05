@@ -31,7 +31,7 @@ class c_grammar{
     vector<int> m_isEnd;
   private:
     void f_addString(string p_string);
-    void f_removeImmediateLeftRecursion(string p_nonTerminal);
+    bool f_removeImmediateLeftRecursion(string p_nonTerminal);
     bool f_isAccepted(vector<string> p_grammarString, stack<string> p_currentSentForm, int pos);
 };
 

@@ -1,10 +1,19 @@
-2 2
-a b
+4 4
+a b c d
 A
-NAb
+Bb
 a
 !
-N
-epsilon
+B
+Cc
+b
+!
+C
+Dd
+c
+!
+D
+Aa
+d
 !
 1

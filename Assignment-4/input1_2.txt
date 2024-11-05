@@ -1,20 +1,14 @@
-2 4
-a b
+3 3
+a b c
 A
-TB
-!
-S
-AS
+Bb
 a
 !
 B
-epsilon
-S
-!
-T
-epsilon
-a
+Cc
 b
 !
-2
-S
+C
+Aa
+c
+!

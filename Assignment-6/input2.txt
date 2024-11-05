@@ -1,0 +1,20 @@
+prog
+  if 10 = 10 then
+    print "Abeed"
+    if 10 < 12 then
+      print "Shaik"
+    else
+      while i < (2 + 3 * 4) do
+        print "XYZ"
+      end
+      a := 20 + 30;
+      print a
+    end
+    a := 10;
+  else 
+    a := 2 + 3;
+    print 2 + 3
+  end
+  b := a + 10;
+  print b
+end

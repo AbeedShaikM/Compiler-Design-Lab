@@ -1,0 +1,5 @@
+prog
+  if 10 = 10 then
+    print "Abeed"
+  end
+end

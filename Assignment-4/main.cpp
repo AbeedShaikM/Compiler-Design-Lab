@@ -49,8 +49,8 @@ int main(){
       break;
     }
     case 2:{
-      o_grammar.f_removeLeftRecursion();
       o_grammar.f_leftFactor();
+      o_grammar.f_removeLeftRecursion();
       string l_startSymbol;
       cin >> l_startSymbol;
       map<string, set<string>> l_result = o_grammar.f_getFollow(l_startSymbol);

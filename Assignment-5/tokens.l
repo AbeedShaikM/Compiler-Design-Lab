@@ -8,8 +8,8 @@ FILE *yyout; // Output file
 
 %%
 "+"              { fprintf(yyout, "+"); }
-"−"              { fprintf(yyout, "−"); }
-"∗"              { fprintf(yyout, "∗"); }
+"-"              { fprintf(yyout, "−"); }
+"*"              { fprintf(yyout, "∗"); }
 "/"              { fprintf(yyout, "/"); }
 "="              { fprintf(yyout, "="); }
 "<"              { fprintf(yyout, "<"); }

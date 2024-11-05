@@ -36,6 +36,7 @@ int main(){
 
   switch (q_no){
   case 1:
+    // o_grammar.f_leftFactor();
     o_grammar.f_removeLeftRecursion();
     cout << "\nGrammar after removing left recursion.\n";
     o_grammar.f_print();

@@ -97,7 +97,15 @@ bool c_grammar::f_hasImmediateRecursion(string p_nonTerminal){
   return false;
 }
 
-void c_grammar::f_removeImmediateLeftRecursion(string p_nonTerminal){
+bool c_grammar::f_hasImmediateRecursion(string p_nonTerminal){
+  for(string l_varString: m_productionRules[p_nonTerminal]){
+    vector<string> l_symbols = f_getSymbols(l_varString);
+    if(l_symbols[0] == p_nonTerminal) return true;
+  }
+  return false;
+}
+
+bool c_grammar::f_removeImmediateLeftRecursion(string p_nonTerminal){
   if(f_hasImmediateRecursion(p_nonTerminal)){
     string l_newSymbol = f_getNewSymbol(p_nonTerminal);
     f_addNonTerminal(l_newSymbol);
@@ -113,37 +121,32 @@ void c_grammar::f_removeImmediateLeftRecursion(string p_nonTerminal){
       m_productionRules[p_nonTerminal].erase(l_varString);
     }
     f_addProductionRule(l_newSymbol, "epsilon");
+    return true;
   }
+  return false;
 }
 
 void c_grammar::f_removeLeftRecursion(){
   assert(m_nonTerminals.size() == m_productionRules.size());
   set<string> l_nonTerminals = m_nonTerminals; 
   for(string l_nonTerminal: l_nonTerminals){
-    set<string> l_newProductionRule = m_productionRules[l_nonTerminal];
+    set<string> l_tempProd = m_productionRules[l_nonTerminal];
     for(string l_nonTerminal_: m_nonTerminals){
+      set<string> l_newProductionRule = m_productionRules[l_nonTerminal];
       if(l_nonTerminal == l_nonTerminal_) break;
       for(string l_varString: m_productionRules[l_nonTerminal]){
-        bool flag = false;
         vector<string> l_symbols = f_getSymbols(l_varString);
         if(l_symbols[0] == l_nonTerminal_){
           for(string l_varString_: m_productionRules[l_nonTerminal_]){
-            vector<string> l_symbols_ = f_getSymbols(l_varString_);
-            if(l_symbols_[0] == l_nonTerminal) flag = true;
-          }
-        }
-        if(flag){
-          for(string l_varString_: m_productionRules[l_nonTerminal_]){
-            l_newProductionRule.insert(l_varString.substr((int)l_symbols[0].size()) + (l_varString_ == "epsilon" ? "": l_varString_));
+            l_newProductionRule.insert((l_varString_ == "epsilon" ? "": l_varString_) + l_varString.substr((int)l_symbols[0].size()));
           }
           l_newProductionRule.erase(l_varString);
         }
       }
+      m_productionRules[l_nonTerminal] = l_newProductionRule;
     }
-    for(string l_varString: l_newProductionRule){
-      f_addProductionRule(l_nonTerminal, l_varString);
-    }
-    f_removeImmediateLeftRecursion(l_nonTerminal);
+    if(f_removeImmediateLeftRecursion(l_nonTerminal));
+    else m_productionRules[l_nonTerminal] = l_tempProd;
   }
 }
 

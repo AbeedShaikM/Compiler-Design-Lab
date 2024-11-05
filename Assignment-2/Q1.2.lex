@@ -3,8 +3,10 @@
 %}
 
 %%
-c[a-zA-Z0-9]*r { printf("valid\n"); return 1;}
-.*       { printf("Invalid input\n");exit(1);}
+aa*(b|c)*a    { printf(" T1 "); }
+bb*(a|c)*b    { printf(" T2 "); }
+cc*(b|a)*c    { printf(" T3 "); }
+.|\n          { printf(" ? "); }
 %%
 
 int main() {
